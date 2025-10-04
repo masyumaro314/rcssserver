@@ -751,11 +751,16 @@ DispSenderLoggerV1::sendMsg( const BoardType board,
     dispinfo_t disp;
     disp.mode = htons( MSG_MODE );
     disp.body.msg.board = htons( board );
-    std::strncpy( disp.body.msg.message,
-                  msg,
-                  std::min( sizeof( disp.body.msg.message ),
-                            std::strlen( msg ) ) );
-
+    // std::strncpy( disp.body.msg.message,
+    //               msg,
+    //               std::min( sizeof( disp.body.msg.message ),
+    //                         std::strlen( msg ) ) );
+    std::snprintf( disp.body.msg.message,
+                   sizeof( disp.body.msg.message ),
+                   "%.*s",
+                   (int)std::min( sizeof( disp.body.msg.message ),
+                                  std::strlen( msg ) ),
+                   msg );
     transport().write( reinterpret_cast< const char * >( &disp ),
                        sizeof( dispinfo_t ) );
 }
