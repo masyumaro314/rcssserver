@@ -50,6 +50,10 @@ public:
     void serializePlayerTypeBegin( std::ostream & strm,
                                    const int id ) const override;
 
+private:
+    using SerializerCommonStdv7::serializeParam;
+
+public:
     virtual
     void serializeParam( std::ostream & strm,
                          const std::string & name,

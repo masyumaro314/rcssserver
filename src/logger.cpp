@@ -1254,8 +1254,12 @@ Logger::writeTextLog( const Stadium & stadium,
          && stadium.playmode() != PM_TimeOver )
     {
         char buf[max_message_length_for_display];
-        std::strncpy( buf, message, std::min( max_message_length_for_display,
-                                              (int)std::strlen( message ) ) );
+        // std::strncpy( buf, message, std::min( max_message_length_for_display,
+        //                                       (int)std::strlen( message ) ) );
+        std::snprintf( buf, sizeof( buf ), "%.*s",
+                       std::min( max_message_length_for_display - 1,
+                                  (int)std::strlen( message ) ),
+                       message );
 
         writeMsgToGameLog( LOG_BOARD, buf );
     }
